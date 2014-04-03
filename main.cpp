@@ -1,4 +1,3 @@
-
 #include "acceptor.hpp"
 #include "session.hpp"
 
@@ -22,12 +21,13 @@ int main2(boost::asio::io_service &ios, int argc, char** argv) {
 		po::options_description description("allowed options");
 		description.add_options()
 			("help,h", "produce help message")
-			("local-ip",		po::value<std::string>(&local_ip)->default_value("127.0.0.1"), "local IP-address")
+			("local-ip",	po::value<std::string>(&local_ip)->default_value("127.0.0.1"), "local IP-address")
 			("local-port ",	po::value<boost::uint16_t>(&local_port)->default_value(44599),	"local port")
-			("remote-ip",		po::value<std::string>(&remote_ip),	"remote IP-address")
-			("remote-port",	po::value<boost::uint16_t>(&remote_port),	"remote port")
-			("threads",			po::value<std::size_t>(&threads), "work threads")
-			("log-file",      po::value<std::string>(&log_file_name)->default_value("logfile.log"), "log-file name");
+			("remote-ip",	po::value<std::string>(&remote_ip)->required(),	"remote IP-address")
+			("remote-port",	po::value<boost::uint16_t>(&remote_port)->required(),	"remote port")
+			("threads",	po::value<std::size_t>(&threads), "work threads")
+			("log-file",	po::value<std::string>(&log_file_name)->default_value("logfile.log"), "log-file name")
+		;
 
 		po::variables_map options;
 		try {
@@ -39,14 +39,6 @@ int main2(boost::asio::io_service &ios, int argc, char** argv) {
 		}
 		if ( options.count("help") ) {
 			std::cout << description << std::endl;
-			return 0;
-		}
-		if ( !options.count("remote-ip") ) {
-			std::cout << "please choose remote IP" << std::endl;
-			return 0;
-		}
-		if ( !options.count("remote-port") ) {
-			std::cout << "please choose remote port" << std::endl;
 			return 0;
 		}
 

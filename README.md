@@ -1,2 +1,2 @@
-transparent-proxy
+Transparent proxy using boost.asio
 =================
